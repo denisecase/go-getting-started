@@ -5,9 +5,54 @@ A barebones Go app from the [Getting Started with Go on Heroku](https://devcente
 
 - Repo at <https://github.com/heroku/go-getting-started.git>
 
+On Windows, we'll need WSL, Docker, Golang, Git, and Heroku. Be patient. This might take a while. 
+
+-----
+
+## Preparation - WSL
+
+Install Windows Subsystem for Linux (WSL) <https://docs.microsoft.com/en-us/windows/wsl/install>
+
+```PowerShell
+wsl --install
+```
+
+Then restart your machine. If you  need a distribution, open PS as Admin and run
+
+```PowerShell
+wsl --install -d Ubuntu
+```
+
+It may take a while to download and install. Then, the Ubuntu (a popular Linux distribution) window will open. Still installing.
+
+After install, verify with `wsl -l -v`
+
+## Install Packages with Chocolatey
+
+```PowerShell
+choco install golang -y
+choco install heroku-cli -y
+choco install vscode -y
+choco install git -y
+choco install docker-desktop -y
+choco install docker-toolbox -y
+refreshenv
+choco list --local
+ ```
+
+ The following are helpful to debug any errors. 
+
+ ```PowerShell
+ & 'C:\Program Files\Docker\Docker\DockerCli.exe' -SwitchDaemon
+ & "C:\Program Files\Docker\Docker\resources\com.docker.diagnose.exe" check
+ ```
+
+ - [Go](http://golang.org/doc/install) version 1.17 or newer 
+ - [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
 ## Running Locally
 
-Make sure you have [Go](http://golang.org/doc/install) version 1.17 or newer and the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed.
+Use the Windows start key to start Docker Desktop / Run as Administrator. 
 
 In GitHub, fork [the repo](https://github.com/heroku/go-getting-started.git) so you can mess with it. 
 
@@ -17,6 +62,7 @@ Then, in the git clone command below, use your GitHub account (instead of heroku
 git clone https://github.com/denisecase/go-getting-started.git
 cd go-getting-started
 go build -o bin/go-getting-started -v . # or `go build -o bin/go-getting-started.exe -v .` in git bash
+docker run -dp 3000:3000 go-getting-started
 ```
 
 
