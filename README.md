@@ -23,9 +23,16 @@ Then restart your machine. If you  need a distribution, open PS as Admin and run
 wsl --install -d Ubuntu
 ```
 
-It may take a while to download and install. Then, the Ubuntu (a popular Linux distribution) window will open. Still installing.
+It may take a while to download and install. 
+Then, the Ubuntu (a popular Linux distribution) window will open. 
+It will continue installing for a while. 
 
-After install, verify with `wsl -l -v`
+- Finally, it will ask for a username (e.g. denise).
+- Then, it will ask for a password for that user. 
+- Confirm the password when prompted.
+- It will prompt you to run `sudo apt update`. Go ahead and do so. 
+- When it finishes, exit the terminal with CTRL D ("done").
+- Back in PS, verify WSL installation with `wsl -l -v`.
 
 ## Install Packages with Chocolatey
 
@@ -47,8 +54,26 @@ choco list --local
  & "C:\Program Files\Docker\Docker\resources\com.docker.diagnose.exe" check
  ```
 
- - [Go](http://golang.org/doc/install) version 1.17 or newer 
- - [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+## Login To Docker
+
+Login with your Docker ID to push and pull images from Docker Hub. 
+If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Choose a Docker username, enter email, chose a password. 
+Verify your email. 
+
+```PowerShell
+docker login
+```
+
+Enter your Docker username and password. Test by running a sample Docker app.
+
+```PowerShell
+docker run -d -p 80:80 docker/getting-started
+```
+
+Run Docker Desktop as Admin. Verify the container is running. 
+Use the controls to stop the container. 
+
 
 ## Running Locally
 
@@ -61,13 +86,20 @@ Then, in the git clone command below, use your GitHub account (instead of heroku
 ```PowerShell
 git clone https://github.com/denisecase/go-getting-started.git
 cd go-getting-started
-go build -o bin/go-getting-started -v . # or `go build -o bin/go-getting-started.exe -v .` in git bash
-docker run -dp 3000:3000 go-getting-started
+# go build -o bin/go-getting-started -v . 
+# or `go build -o bin/go-getting-started.exe -v .` in git bash
+go build -o bin/go-getting-started.exe -v
 ```
 
+On Windows you will need to do two things before being able to run `heroku local`:
+Run `go build -o bin/go-getting-started.exe -v` instead of the command listed above.
+Alter Procfile so it’s contents are: `web: bin\go-getting-started.exe` instead of what is in the checkout. 
+Note the .exe at the end - and the backslash instead of forward slash.
+Don’t commit changes to Procfile though, otherwise your application’s web process won’t be able to start on Heroku.
 
-
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+- Now run `heroku local`.
+- Click "allow access" to cotinuue. 
+- Open brower to [localhost:5000](http://localhost:5000/).
 
 ## Heroku: Set up Deployment
 
@@ -89,7 +121,6 @@ Monitor deployment. After deploying / on the app dashboard, go to Overview / cli
 
 - If successful, click "View App".
 - If unsuccessful, click "More" / "View Logs".
-
 
 ## Documentation
 
